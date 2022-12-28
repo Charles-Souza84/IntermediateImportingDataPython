@@ -166,3 +166,37 @@ json_data = r.json()
 for key, value in json_data.items():
     print(key + ':', value) 
 ```
+___
+# Explorando a API do Twitter
+
+### A API do Twitter e autenticação
+
+Diferente de outras APIs em que podemos fazer acesso de forma anônima, para acessar a API do Twitter é necessário que se tenha uma conta para fazer login. Ao fazer o login no Twitter, na aba _"Keys and Access Tokens"_ devemos copiar as credencias de autenticação:
+
+* API key;
+* API secret;
+* Access token;
+* Access token secret;
+
+O pacote _tweepy_ é muito utilizado para interagir com a API do Twitter.
+
+**utilizando tweepy: autenticação**
+```python
+import tweepy, json
+# primeiro criamos as variáveis necessárias para armazenar as credenciais de autenticação
+access_token = "..."
+access_token_secret = "..."
+consumer_key = "..."
+consumer_secret = "..."
+auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+auth.set_access_token(access_token, access_token_secret)
+```
+
+**utilizando tweepy: stream tweets**
+
+```python
+# criando um objeto streaming e antenticando
+stream = tweepy.Stream(consumer_key, consumer_secret, access_token, access_token_secret)
+# esta linha filtra os dados conforme as palavras chave
+stream.filter(track=['apples', 'oranges'])
+```
