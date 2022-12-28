@@ -123,3 +123,46 @@ https://bugs.launchpad.net/beautifulsoup/
 http://lxml.de/
 http://code.google.com/p/html5lib/
 ```
+___
+# Interagindo com APIs para importar dados da rede
+
+### Introdução a APIs e JSONs
+
+* API - Application Programming Interfaces. 
+
+API é um conjunto de protocolos e rotinas para construir e interagir com aplicações de software. Uma padrão para transferir dados através de uma API é o formato de arquivo JSON (JavaScript Object Notation). Ao contrário de arquivos pickled, um arquivo JSON pode ser lido por humanos.
+
+Um arquivo JSON é formato por duplas de nome-valor, separados por ":" , assemelhando-se a um dicionário Python. As chaves JSON serão sempre string entre aspas e os valores podem ser strings, inteiros, arrays ou até mesmo objetos. 
+
+* **carregando arquivos JSON em Python**
+```python
+import json
+with open('snakes.json', 'r') as json_file:
+    json_data = json.load(json_file)
+
+type(json_data)
+```
+<code>dict</code>
+
+* **explorando arquivos JSON em Python**
+```python
+# o laço imprime cada chave e valor do arquivo JSON
+for key, value in json_data.items():
+    print(key + ':', value)
+```
+
+### APIs e interação com a rede
+
+Muitos dados adquiridos por APIs são no formato JSON.
+
+```python   
+import requests
+# exemplo utilizando a API OMDB - Open Movie Database - possui documentação sobre como ser utilizada
+# no URL identificamos a Query String pelo caracter "?". Neste caso, estamos fazendo um request para que a API retorne
+# os dados sobre o filme chamado 'Hackers'. O caracter 't' significa título ( consta na documentação da API ).
+url = 'http://www.omdbapi.com/?t=hackers'
+r = requests.get(url)
+json_data = r.json()
+for key, value in json_data.items():
+    print(key + ':', value) 
+```
